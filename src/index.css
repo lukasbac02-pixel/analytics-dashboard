@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --tooltip-bg: #fff;
+}
+
+.dark {
+  --tooltip-bg: #1f2937;
+}
+
+body {
+  margin: 0;
+}
+
+/* react-grid-layout overrides */
+.react-grid-item.react-grid-placeholder {
+  background: #6366f1 !important;
+  opacity: 0.15 !important;
+  border-radius: 12px !important;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  border-right-color: #9ca3af !important;
+  border-bottom-color: #9ca3af !important;
+}
