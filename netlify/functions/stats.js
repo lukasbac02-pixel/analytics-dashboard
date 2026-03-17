@@ -2,12 +2,17 @@ import { supabase } from '../lib/supabase.js';
 import { cors, authCheck, parseQuery } from '../lib/validate.js';
 
 export async function handler(event) {
+  try {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: cors() };
   }
 
   if (!authCheck(event)) {
     return { statusCode: 401, headers: cors(), body: JSON.stringify({ error: 'Unauthorized' }) };
+  }
+
+  if (!supabase) {
+    return { statusCode: 500, headers: cors(), body: JSON.stringify({ error: 'Supabase not configured' }) };
   }
 
   const { siteId, start, end } = parseQuery(event);
@@ -91,4 +96,7 @@ export async function handler(event) {
       browsers,
     }),
   };
+  } catch (err) {
+    return { statusCode: 500, headers: cors(), body: JSON.stringify({ error: err.message }) };
+  }
 }
